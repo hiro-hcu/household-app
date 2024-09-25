@@ -18,7 +18,9 @@ $routes = [
     new Route("","PortfolioSiteControllers\\PortfolioSite"),
     new Route("login", "HouseholdControllers\\LoginController"),
     new Route("logout", "HouseholdControllers\\LogoutController"),
-
+    new Route("dash_bord", "HouseholdControllers\\DashBordController"),
+    new Route("entry_income", "HouseholdControllers\\EntryIncomeController"),
+    new Route("entry_expence", "HouseholdControllers\\EntryExpenceController"),
 
 ];
 
@@ -52,6 +54,17 @@ $controller_name = "app\\Controllers\\{$controller_name}";
 if (class_exists($controller_name)) {
     echo "Controller class {$controller_name} is found! <br>";
     $controller = new $controller_name();
+
+    echo "Request Method: " . $_SERVER['REQUEST_METHOD'] . "<br>";
+    //exit();
+    // リクエストメソッドがget or postを判定して適切なメソッドを呼び出す
+    if($_SERVER['REQUEST_METHOD'] == 'GET'){
+        $controller->get();
+    }elseif($_SERVER['REQUEST_METHOD']=='POST'){
+        $controller->post();
+    }else{
+        echo "Unsupported request method! <br>";
+    }
     $controller->get();
 } else {
     echo "Controller class {$controller_name} is not found!";
